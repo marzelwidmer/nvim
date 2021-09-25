@@ -27,10 +27,9 @@ set expandtab
 set smartindent
 set nowrap
 
-"> plug 
+"> Plug 
 call plug#begin('~/.config/nvim/plugged')
 
-"Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-fugitive'                               " https://github.com/tpope/vim-fugitive
 Plug 'preservim/nerdtree'                               " https://github.com/preservim/nerdtree.  
 Plug 'ctrlpvim/ctrlp.vim'                               " https://ctrlpvim.github.io/ctrlp.vim/ 		
@@ -41,9 +40,10 @@ Plug 'kyazdani42/nvim-web-devicons'                     " for file icons
 Plug 'kyazdani42/nvim-tree.lua'                         " https://github.com/preservim/nerdtree
 Plug 'vim-airline/vim-airline'                          " https://github.com/vim-airline/vim-airline
 Plug 'ryanoasis/vim-devicons'                           " https://github.com/ryanoasis/vim-devicons + https://github.com/ryanoasis/nerd-fonts/
-Plug 'tpope/vim-commentary'                             " https://github.com/tpope/vim-commentary
+Plug 'tpope/vim-commentary'                             " https://github.com/tpope/vim-commentary (gc)
 Plug 'airblade/vim-gitgutter'                           " https://github.com/airblade/vim-gitgutter
 Plug 'mkitt/tabline.vim'                                " https://github.com/mkitt/tabline.vim
+Plug 'Pocco81/AutoSave.nvim'                            " https://github.com/Pocco81/AutoSave.nvim
 
 "> Go
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }     " https://github.com/fatih/vim-go
@@ -81,9 +81,32 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 set updatetime=500
 "-- vim-gitgutter END
 
-
 "> papercolor-theme
 set termguicolors
 set background=dark
 colorscheme PaperColor
 "-- papercolor-theme END
+
+"> https://github.com/Pocco81/AutoSave.nvim
+lua << EOF
+local autosave = require("autosave")
+
+autosave.setup(
+    {
+        enabled = true,
+        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+        events = {"InsertLeave", "TextChanged"},
+        conditions = {
+            exists = true,
+            filename_is_not = {},
+            filetype_is_not = {},
+            modifiable = true
+        },
+        write_all_buffers = false,
+        on_off_commands = true,
+        clean_command_line_interval = 0,
+        debounce_delay = 135
+    }
+)
+EOF
+
