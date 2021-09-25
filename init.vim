@@ -16,7 +16,7 @@ set vb
 set ruler
 set spelllang=en_us
 set autoindent
-set colorcolumn=80
+set colorcolumn=180
 set mouse=a
 set clipboard=unnamed
 set noscrollbind
@@ -54,13 +54,19 @@ Plug 'udalov/kotlin-vim'
 "> YAML
 Plug 'avakhov/vim-yaml'
 
-
-
 "> Theme
 Plug 'NLKNguyen/papercolor-theme'               " https://github.com/NLKNguyen/papercolor-theme
 
 call plug#end()
 "-- plug END
+
+"> Tabline
+hi Search       cterm=NONE      ctermfg=black           ctermbg=red
+hi TabLine      ctermfg=Black   ctermbg=Green           cterm=NONE
+hi TabLineFill  ctermfg=Black   ctermbg=Green           cterm=NONE
+hi TabLineSel   ctermfg=White   ctermbg=DarkBlue        cterm=NONE
+
+
 
 "> Map
 map <silent> <C-n> :NERDTreeFocus<CR>
@@ -93,7 +99,8 @@ local autosave = require("autosave")
 
 autosave.setup(
     {
-        enabled = true,
+        enabled = false,
+        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
         execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
         events = {"InsertLeave", "TextChanged"},
         conditions = {
