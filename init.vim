@@ -31,19 +31,19 @@ set nowrap
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-fugitive'                               " https://github.com/tpope/vim-fugitive
-Plug 'preservim/nerdtree'                               " https://github.com/preservim/nerdtree.  
 Plug 'ctrlpvim/ctrlp.vim'                               " https://ctrlpvim.github.io/ctrlp.vim/ 		
 Plug 'justinmk/vim-sneak'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'                    " https://github.com/nvim-telescope/telescope.nvim
 Plug 'kyazdani42/nvim-web-devicons'                     " for file icons
-Plug 'kyazdani42/nvim-tree.lua'                         " https://github.com/preservim/nerdtree
 Plug 'vim-airline/vim-airline'                          " https://github.com/vim-airline/vim-airline
 Plug 'ryanoasis/vim-devicons'                           " https://github.com/ryanoasis/vim-devicons + https://github.com/ryanoasis/nerd-fonts/
 Plug 'tpope/vim-commentary'                             " https://github.com/tpope/vim-commentary (gc)
 Plug 'airblade/vim-gitgutter'                           " https://github.com/airblade/vim-gitgutter
 Plug 'mkitt/tabline.vim'                                " https://github.com/mkitt/tabline.vim
-Plug 'Pocco81/AutoSave.nvim'                            " https://github.com/Pocco81/AutoSave.nvim
+
+"> NerdTree
+Plug 'preservim/nerdtree'                               " https://github.com/preservim/nerdtree
 
 "> Go
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }     " https://github.com/fatih/vim-go
@@ -66,10 +66,14 @@ hi TabLine      ctermfg=Black   ctermbg=Green           cterm=NONE
 hi TabLineFill  ctermfg=Black   ctermbg=Green           cterm=NONE
 hi TabLineSel   ctermfg=White   ctermbg=DarkBlue        cterm=NONE
 
-
-
-"> Map
-map <silent> <C-n> :NERDTreeFocus<CR>
+" NerdTree Settings
+nmap <C-f> :NERDTreeToggle<CR>
+vmap ++ <plug>NERDCommenterToggle
+nmap ++ <plug>NERDCommenterToggle
+" Start NERDTree and leave the cursor in it.
+autocmd VimEnter * NERDTree
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 "> netrw
 nnoremap - :Explore<CR>
@@ -93,27 +97,12 @@ set background=dark
 colorscheme PaperColor
 "-- papercolor-theme END
 
-"> https://github.com/Pocco81/AutoSave.nvim
-lua << EOF
-local autosave = require("autosave")
+"> ShortCut spit naviagation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
-autosave.setup(
-    {
-        enabled = false,
-        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-        events = {"InsertLeave", "TextChanged"},
-        conditions = {
-            exists = true,
-            filename_is_not = {},
-            filetype_is_not = {},
-            modifiable = true
-        },
-        write_all_buffers = false,
-        on_off_commands = true,
-        clean_command_line_interval = 0,
-        debounce_delay = 135
-    }
-)
-EOF
+
+
 
