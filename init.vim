@@ -27,6 +27,7 @@ set expandtab
 set smartindent
 set nowrap
 set undodir=~/.vim/undodir
+set scrolloff=5
 
 
 "> Plug 
@@ -109,7 +110,4 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-
-
-
-
+        
