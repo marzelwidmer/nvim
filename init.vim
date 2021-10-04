@@ -26,6 +26,8 @@ set noerrorbells
 set expandtab
 set smartindent
 set nowrap
+set undodir=~/.vim/undodir
+
 
 "> Plug 
 call plug#begin('~/.config/nvim/plugged')
@@ -41,7 +43,7 @@ Plug 'ryanoasis/vim-devicons'                           " https://github.com/rya
 Plug 'tpope/vim-commentary'                             " https://github.com/tpope/vim-commentary (gc)
 Plug 'airblade/vim-gitgutter'                           " https://github.com/airblade/vim-gitgutter
 Plug 'mkitt/tabline.vim'                                " https://github.com/mkitt/tabline.vim
-
+Plug 'mbbill/undotree'                                  " https://github.com/mbbill/undotree
 "> NerdTree
 Plug 'preservim/nerdtree'                               " https://github.com/preservim/nerdtree
 
@@ -53,6 +55,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}         " https://github.com/neo
 Plug 'udalov/kotlin-vim'
 "> YAML
 Plug 'avakhov/vim-yaml'
+
+"> TOML
+Plug 'cespare/vim-toml', { 'branch': 'main' }           " https://github.com/cespare/vim-toml
 
 "> Theme
 Plug 'NLKNguyen/papercolor-theme'               " https://github.com/NLKNguyen/papercolor-theme
@@ -70,10 +75,12 @@ hi TabLineSel   ctermfg=White   ctermbg=DarkBlue        cterm=NONE
 nmap <C-f> :NERDTreeToggle<CR>
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
-" Start NERDTree and leave the cursor in it.
-autocmd VimEnter * NERDTree
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Start NERDTree. If a file is specified, move the cursor to its window.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+
 
 "> netrw
 nnoremap - :Explore<CR>
