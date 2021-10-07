@@ -9,7 +9,6 @@ filetype off
 
 set encoding=UTF-8
 set nocompatible
-set hlsearch
 set number relativenumber
 set laststatus=2
 set vb
@@ -28,6 +27,7 @@ set smartindent
 set nowrap
 set undodir=~/.vim/undodir
 set scrolloff=5
+set hlsearch
 
 "> Plug 
 call plug#begin('~/.config/nvim/plugged')
@@ -75,8 +75,10 @@ hi Search       cterm=NONE      ctermfg=black           ctermbg=red
 hi TabLine      ctermfg=Black   ctermbg=Green           cterm=NONE
 hi TabLineFill  ctermfg=Black   ctermbg=Green           cterm=NONE
 hi TabLineSel   ctermfg=White   ctermbg=DarkBlue        cterm=NONE
+"> clear search 
+nmap <F2> :set hlsearch!<CR>
 
-" NerdTree Settings
+ NerdTree Settings
 nmap <C-f> :NERDTreeToggle<CR>
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
@@ -85,7 +87,6 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 " Start NERDTree. If a file is specified, move the cursor to its window.
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-
 
 "> netrw
 nnoremap - :Explore<CR>
@@ -114,4 +115,11 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-        
+
+"> fzf 
+nmap <C-p> :Files<CR>
+
+"> reset search 
+nmap <F2> :set hlsearch!<CR>
+
+
