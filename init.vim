@@ -29,7 +29,6 @@ set nowrap
 set undodir=~/.vim/undodir
 set scrolloff=5
 
-
 "> Plug 
 call plug#begin('~/.config/nvim/plugged')
 
@@ -62,6 +61,11 @@ Plug 'cespare/vim-toml', { 'branch': 'main' }           " https://github.com/ces
 
 "> Theme
 Plug 'NLKNguyen/papercolor-theme'               " https://github.com/NLKNguyen/papercolor-theme
+
+"> fzf 
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 
 call plug#end()
 "-- plug END
